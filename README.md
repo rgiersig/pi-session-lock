@@ -58,10 +58,15 @@ No runtime dependencies or build step are required; Pi loads TypeScript through 
 ```sh
 npm test                  # six primitive test cases
 npm run test:integration  # real isolated RPC and TUI processes
-npm run test:all           # all eight test cases
+npm run test:webui        # optional installed-WebUI HTTP/SSE test
+npm run test:all           # eight base cases + optional WebUI case
 ```
 
-Integration tests require `pi` on PATH and `tmux`; set `PI_TEST_BIN` to use another Pi executable. They use temporary agent directories and sessions, do not call a provider, and do not touch running WebUI services. Browser WebUI acceptance was performed separately and is not part of this automated suite.
+Integration tests require `pi` on PATH and `tmux`; set `PI_TEST_BIN` to use another Pi executable. They use temporary agent directories and sessions, do not call a provider, and do not touch running WebUI services.
+
+The optional WebUI test runs only if `@firstpick/pi-package-webui` can be resolved, `pi-webui` is on PATH, or the conventional `~/.local/share/pi-webui` installation exists. Otherwise Node reports **SKIP**, not a failure. For a custom installation, set `PI_TEST_WEBUI_BIN` to the executable or `bin/pi-webui.mjs` path. An explicit invalid path fails instead of silently skipping. Set `PI_TEST_WEBUI=0` to skip it even when installed.
+
+It starts a separate loopback-only WebUI on a temporary free port, with a temporary agent directory and a dedicated owner process. HTTP responses must report handled prompts; SSE must deliver the conflict and blocked-input warnings; no JSONL may be created. Its processes and temporary files are removed automatically. An installed but incompatible/broken WebUI fails the test. Nothing is installed or updated by the test. Browser visual acceptance was performed separately; this automated test verifies transport and behavior, not rendering.
 
 ## Prior art
 
