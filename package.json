@@ -1,0 +1,17 @@
+{
+  "name": "pi-session-lock",
+  "version": "0.1.0",
+  "description": "Linux advisory session ownership and concurrent-resume protection for the Pi coding agent",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["pi-package", "pi-extension", "session-lock"],
+  "engines": { "node": ">=22" },
+  "peerDependencies": { "@earendil-works/pi-coding-agent": "*" },
+  "pi": { "extensions": ["./index.ts"] },
+  "files": ["index.ts", "lib/session-lock.mjs", "README.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test tests/session-lock.test.mjs",
+    "test:integration": "node --test tests/integration.test.mjs",
+    "test:all": "node --test tests/*.test.mjs"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+*.tgz
+.env
+.env.*
+auth.json
+session-locks/
+sessions/
+coverage/
